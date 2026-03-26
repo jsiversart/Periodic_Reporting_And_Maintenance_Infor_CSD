@@ -14,7 +14,7 @@ from datetime import datetime
 from core.config import PATHS, JDBC, CONTACTS
 from core.notifier import send_email
 from core.outlook_drafter import create_email_draft
-from etl.etl_utils import remote_to_csv, remote_scalar, refresh_csdpdata
+from etl.etl_utils import remote_to_csv, remote_scalar
 from sql_queries.mid_month_SQL import WG_ICSPE_NEEDED_SQL, FROZ_COUNT_SQL, CORE_ISSUE_CHECK_SQL, ZERO_BASE_LIST_SQL
 
 
@@ -23,10 +23,10 @@ from sql_queries.mid_month_SQL import WG_ICSPE_NEEDED_SQL, FROZ_COUNT_SQL, CORE_
 
 today_str = datetime.now().strftime('%m%d%y')
 
-print("SQL BEING SENT:", repr(FROZ_COUNT_SQL))
-froz_count = remote_scalar(JDBC, FROZ_COUNT_SQL)
 
 def notify():
+    print("SQL BEING SENT:", repr(FROZ_COUNT_SQL))
+    froz_count = remote_scalar(JDBC, FROZ_COUNT_SQL)
     SUBJECT ="Biweekly Runner Notification"
     #logic based email inclusions
 

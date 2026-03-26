@@ -13,6 +13,12 @@ PATHS = {
     "catalogs": Path(r"path\to\catalog\dir"),
     "reports": Path(r"path\to\reports\dir"),
     "pdspadds": Path(r"path\to\PDSP\dir"),
+    "analyst":Path(r"path\to\analyst\aka\general\dir"),
+    "osapprovaldata": Path(r"path\to\osapprovaldata\dir"),
+    "threshold_reports": Path(r"path\to\threshold_reports\dir"),
+    "thresholdignores": Path(r"path\to\thresholdignores_list.csv"),
+    "icspr_reports": Path(r"path\to\icspr_reports\dir"),
+    "icspr_ignores": Path(r"path\to\icspr_ignores_list.csv"),
 }
 
 # === JDBC CONFIG ===

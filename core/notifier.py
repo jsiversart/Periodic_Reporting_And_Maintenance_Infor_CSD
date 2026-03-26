@@ -54,13 +54,13 @@ def send_email(
     if isinstance(bcc, str):
         bcc = [bcc]
 
-    to_addrs = to_addrs or DEFAULT_TO
+    to_addrs = to_addrs or GMAIL_CREDS["DEFAULT_TO"]
     cc = cc or []
     bcc = bcc or []
 
     # --- Build email ---
     msg = MIMEMultipart()
-    msg["From"] = GMAIL_USER
+    msg["From"] = GMAIL_CREDS["GMAIL_USER"]
     msg["To"] = ", ".join(to_addrs)
     if cc:
         msg["Cc"] = ", ".join(cc)
@@ -93,8 +93,8 @@ def send_email(
     # --- Send via Gmail ---
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
-        server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
-        server.sendmail(GMAIL_USER, all_recipients, msg.as_string())
+        server.login(GMAIL_CREDS["GMAIL_USER"], GMAIL_CREDS["GMAIL_APP_PASSWORD"])
+        server.sendmail(GMAIL_CREDS["GMAIL_USER"], all_recipients, msg.as_string())
 
     print(f"✅ Email sent to: {', '.join(to_addrs)}"
           f"{f' | CC: {', '.join(cc)}' if cc else ''}"

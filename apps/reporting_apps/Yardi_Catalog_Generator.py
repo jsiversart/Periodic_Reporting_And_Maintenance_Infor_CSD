@@ -1,27 +1,27 @@
 # Yardi Catalog Generator.py
 
+
+import sys
+from pathlib import Path
+
+ # --- Ensure repo root is in Python path ---
+repo_root = Path(__file__).resolve().parent
+while not (repo_root / "core").exists() and repo_root.parent != repo_root:
+    repo_root = repo_root.parent
+
+sys.path.insert(0, str(repo_root))
+
+import jaydebeapi
+import pandas as pd
+import sqlite3
+import os
+from datetime import datetime
+from pathlib import Path
+import csv
+from core.config import PATHS, JDBC, CONTACTS
+from core.outlook_drafter import create_email_draft
+
 def generate_yardi_catalog():
-    import sys
-    from pathlib import Path
-
-    # --- Ensure repo root is in Python path ---
-    repo_root = Path(__file__).resolve().parent
-    while not (repo_root / "core").exists() and repo_root.parent != repo_root:
-        repo_root = repo_root.parent
-
-    sys.path.insert(0, str(repo_root))
-
-
-    import jaydebeapi
-    import pandas as pd
-    import sqlite3
-    import os
-    from datetime import datetime
-    from pathlib import Path
-    import csv
-    from core.config import PATHS, JDBC, CONTACTS
-    from core.outlook_drafter import create_email_draft
-
 
 
     # === CONFIGURATION ===
@@ -137,14 +137,17 @@ def generate_yardi_catalog():
         [JDBC["user"], JDBC["password"]],
         JDBC["jar"]
     )
-    cursor_remote = conn_remote.cursor()
+    try:
+        cursor_remote = conn_remote.cursor()
 
 
-    print("Running yardi step 1.sql...")
-    cursor_remote.execute(YARDI_STEP_1_SQL)
-    columns = [desc[0] for desc in cursor_remote.description]
-    data = cursor_remote.fetchall()
-    step1_df = pd.DataFrame(data, columns=columns)
+        print("Running yardi step 1.sql...")
+        cursor_remote.execute(YARDI_STEP_1_SQL)
+        columns = [desc[0] for desc in cursor_remote.description]
+        data = cursor_remote.fetchall()
+        step1_df = pd.DataFrame(data, columns=columns)
+    finally:
+        conn_remote.close()
 
     # Save to SQLite
     print("Updating SQLite yardiitemmaster table...")

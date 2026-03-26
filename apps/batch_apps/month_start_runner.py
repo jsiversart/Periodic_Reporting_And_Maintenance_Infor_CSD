@@ -280,8 +280,8 @@ if __name__ == "__main__":
     run_threshold_reports()
     create_vendor_reports()
     fill_usage_table()
-    price_change_etl_and_reporting() #new additions 3/25, did it work on April run?
-    generate_ops_catalog() #new additions 3/25, did it work on April run?
-    generate_yardi_catalog() #new additions 4/29, did it work on May run?
+    price_change_etl_and_reporting() 
+    generate_ops_catalog() 
+    generate_yardi_catalog()
     notify()
     print("Month start runner complete")
